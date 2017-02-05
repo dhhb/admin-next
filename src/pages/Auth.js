@@ -1,6 +1,11 @@
 import './auth.scss';
 
-import { mapActions } from 'vuex';
+import {
+  mapActions,
+  mapMutations
+} from 'vuex';
+import cookies from 'cookies-js';
+import config from 'c0nfig';
 
 export default {
   data() {
@@ -18,8 +23,10 @@ export default {
     ]),
 
     login() {
-      console.log('login');
-      this.authorize(this.form);
+      this.authorize(this.form).then(token => {
+        cookies.set(config.auth.cookieName, token.id);
+        this.$router.push('/articles');
+      });
     }
   },
 
