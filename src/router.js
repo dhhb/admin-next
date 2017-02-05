@@ -1,14 +1,14 @@
 import Vue from 'vue';
-import Router from 'vue-router';
+import VueRouter from 'vue-router';
 
 import Auth from './pages/Auth';
 import Articles from './pages/Articles';
 import ArticlesList from './pages/ArticlesList';
 import ArticlesItem from './pages/ArticlesItem';
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
