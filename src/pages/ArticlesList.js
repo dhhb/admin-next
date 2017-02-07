@@ -1,3 +1,5 @@
+import './articles-list.scss';
+
 import {
   mapState,
   mapActions,
@@ -40,8 +42,7 @@ export default {
       <h2>{{pageTitle}}</h2>
       <el-table
         :data="articles"
-        stripe
-        border
+        empty-text="—"
         style="width: 100%">
         <el-table-column
           prop="title"

@@ -1,0 +1,15 @@
+.articles-list {
+  .el-table {
+    border: 0 !important;
+    &:before {
+      height: 0 !important;
+    }
+    &:after {
+      width: 0 !important;
+    }
+  }
+  .el-table__fixed-header-wrapper thead div,
+  .el-table__header-wrapper thead div {
+    color: #5e6d82;
+  }
+}
