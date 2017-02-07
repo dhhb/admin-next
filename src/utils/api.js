@@ -72,8 +72,14 @@ function authorize (creds) {
   return _request('/token', 'POST', _createJsonApiRecord('token', creds));
 }
 
-function getArticles () {
-  return _request('/articles', 'GET', {}, {include: 'author'});
+function getArticles (opts = {}) {
+  let query = {};
+
+  if (opts.author) {
+    query.include = 'author';
+  }
+
+  return _request('/articles', 'GET', {}, query);
 }
 
 export default {

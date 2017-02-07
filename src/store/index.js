@@ -41,7 +41,7 @@ const store = new Vuex.Store({
     },
 
     requestArticles({ commit }) {
-      api.getArticles({include: 'author'}).then(articles => {
+      api.getArticles({author: true}).then(articles => {
         commit('setArticles', articles || []);
       });
     }

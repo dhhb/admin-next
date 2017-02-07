@@ -23,9 +23,34 @@ export default {
 
   template: `
     <div class="articles-list">
-      <div v-for="article in articles" :key="article.id">
-        {{article.title}} / {{article.createdAt}}
-      </div>
+      <el-table
+        :data="articles"
+        stripe
+        style="width: 100%">
+        <el-table-column
+          prop="title"
+          :label="$t('articles.tableHead.title')"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="author.name"
+          :label="$t('articles.tableHead.author')"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="createdAt"
+          :label="$t('articles.tableHead.createdAt')"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          :label="$t('articles.tableHead.status')">
+          <template scope="prop">
+            {{prop.row.draft ?
+              $t('articles.status.draft') :
+              $t('articles.status.published')}}
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
   `
 };

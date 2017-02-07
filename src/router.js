@@ -4,9 +4,10 @@ import cookies from 'cookies-js';
 import config from 'c0nfig';
 
 import Auth from './pages/Auth';
-import Articles from './pages/Articles';
+import Dashboard from './pages/Dashboard';
 import ArticlesList from './pages/ArticlesList';
 import ArticlesItem from './pages/ArticlesItem';
+import Settings from './pages/Settings';
 
 Vue.use(VueRouter);
 
@@ -14,20 +15,39 @@ function checkAuth (to, from, next) {
   if (cookies.get(config.auth.cookieName)) {
     next();
   } else {
-    next('/');
+    next('/login');
   }
 }
 
 const router = new VueRouter({
   mode: 'history',
+
   scrollBehavior: () => ({ y: 0 }),
-  routes: [
-    { path: '/', component: Auth },
-    { path: '/articles', component: Articles, beforeEnter: checkAuth, children: [
-      { path: '', component: ArticlesList },
-      { path: ':id', component: ArticlesItem }
-    ]}
-  ]
+
+  routes: [{
+    path: '/login',
+    component: Auth
+  }, {
+    path: '/',
+    component: Dashboard,
+    beforeEnter: checkAuth,
+    children: [{
+      path: '',
+      redirect: 'articles'
+    }, {
+      path: 'articles',
+      component: ArticlesList
+    }, {
+      path: 'articles/:type',
+      component: ArticlesList
+    }, {
+      path: 'articles/:type/:id',
+      component: ArticlesItem
+    }, {
+      path: 'settings',
+      component: Settings
+    }]
+  }]
 });
 
 export default router;
