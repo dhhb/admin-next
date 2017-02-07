@@ -5,7 +5,7 @@ export default {
     <div class="dashboard">
       <header class="header">
         <el-menu
-          theme="light"
+          theme="dark"
           mode="horizontal"
           :router="true"
           :default-active="$route.path">
@@ -28,9 +28,11 @@ export default {
         </el-menu>
       </header>
 
-      <transition name="fade" mode="out-in">
-        <router-view />
-      </transition>
+      <div class="container">
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
+      </div>
     </div>
   `
 };

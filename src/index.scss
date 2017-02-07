@@ -62,7 +62,14 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  width: 1140px;
+  padding: 0 30px;
   margin-left: auto;
   margin-right: auto;
+
+  h2, h3, h4, h5 {
+    font-weight: 400;
+    color: #1f2f3d;
+  }
 }
+
