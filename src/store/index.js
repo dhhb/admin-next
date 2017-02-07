@@ -1,12 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import cookies from 'cookies-js';
+import config from 'c0nfig';
 import api from '../utils/api';
 
 Vue.use(Vuex);
 
+const sessionTokenId = cookies.get(config.auth.cookieName);
+
+if (sessionTokenId) {
+  api.setSession(sessionTokenId);
+}
+
 const store = new Vuex.Store({
   state: {
-    authenticated: false
+    authenticated: false,
+    articles: []
   },
 
   getters: {},
@@ -15,14 +24,25 @@ const store = new Vuex.Store({
     authorize({ commit }, creds) {
       return new Promise((resolve, reject) => {
         api.authorize(creds)
-          .then(data => {
+          .then(token => {
+            api.setSession(token.id);
+            cookies.set(config.auth.cookieName, token.id, {
+              expires: new Date(token.expireAt)
+            });
+
             commit('setAuthenticated', true);
-            resolve(data);
+            resolve(token);
           })
           .catch(err => {
             commit('setAuthenticated', false);
             reject(err);
           });
+      });
+    },
+
+    requestArticles({ commit }) {
+      api.getArticles({include: 'author'}).then(articles => {
+        commit('setArticles', articles || []);
       });
     }
   },
@@ -30,6 +50,10 @@ const store = new Vuex.Store({
   mutations: {
     setAuthenticated(state, value) {
       state.authenticated = value;
+    },
+
+    setArticles(state, articles) {
+      state.articles = [ ...articles ];
     }
   }
 });

@@ -6,6 +6,8 @@ superagentJsonapify(request);
 
 const apiUrl = `${config.api.url}/v1`;
 
+let sessionTokenId;
+
 // conform to json api spec
 // http://jsonapi.org
 function _createJsonApiRecord (type, id, attributes) {
@@ -46,6 +48,11 @@ function _request (resource, method = 'GET', params = {}, query = {}) {
   return new Promise((resolve, reject) => {
     request(method, url)
       .set('Content-Type', 'application/vnd.api+json')
+      .use(req => {
+        if (sessionTokenId) {
+          req.set('Authorization', sessionTokenId);
+        }
+      })
       .query(query)
       .send(params)
       .then(res => {
@@ -57,10 +64,20 @@ function _request (resource, method = 'GET', params = {}, query = {}) {
   });
 }
 
+function setSession (tokenId) {
+  sessionTokenId = tokenId;
+}
+
 function authorize (creds) {
   return _request('/token', 'POST', _createJsonApiRecord('token', creds));
 }
 
+function getArticles () {
+  return _request('/articles', 'GET', {}, {include: 'author'});
+}
+
 export default {
-  authorize
+  authorize,
+  setSession,
+  getArticles
 };

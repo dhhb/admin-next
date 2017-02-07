@@ -4,8 +4,6 @@ import {
   mapActions,
   mapMutations
 } from 'vuex';
-import cookies from 'cookies-js';
-import config from 'c0nfig';
 
 export default {
   data() {
@@ -23,10 +21,13 @@ export default {
     ]),
 
     login() {
-      this.authorize(this.form).then(token => {
-        cookies.set(config.auth.cookieName, token.id);
-        this.$router.push('/articles');
-      });
+      this.authorize(this.form)
+        .then(() => {
+          this.$router.push('/articles');
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
 
