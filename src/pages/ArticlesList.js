@@ -30,7 +30,15 @@ export default {
   methods: {
     ...mapActions([
       'requestArticles'
-    ])
+    ]),
+
+    sortTitleColumn(a, b) {
+      return a.title.localeCompare(b.title);
+    },
+
+    sortAuthorColumn(a, b) {
+      return a.author.name.localeCompare(b.author.name);
+    }
   },
 
   created() {
@@ -47,24 +55,27 @@ export default {
         <el-table-column
           prop="title"
           :label="$t('articles.tableHead.title')"
-          sortable
-          width="180">
+          :sort-method="sortTitleColumn"
+          sortable>
         </el-table-column>
+
         <el-table-column
           prop="author.name"
           :label="$t('articles.tableHead.author')"
-          sortable
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="createdAt"
-          :label="$t('articles.tableHead.createdAt')"
-          sortable
-          width="180">
-        </el-table-column>
-        <el-table-column
-          :label="$t('articles.tableHead.status')"
+          :sort-method="sortAuthorColumn"
           sortable>
+        </el-table-column>
+
+        <el-table-column
+          :label="$t('articles.tableHead.createdAt')"
+          sortable>
+          <template scope="prop">
+            {{prop.createdAt | moment('llll')}}
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          :label="$t('articles.tableHead.status')">
           <template scope="prop">
             {{prop.row.draft ?
               $t('articles.status.draft') :
