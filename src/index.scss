@@ -15,6 +15,10 @@ body {
   font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
+svg {
+  fill: currentColor;
+}
+
 .b2 {
   border-width: 2px !important;
 }
@@ -70,6 +74,40 @@ body {
   h2, h3, h4, h5 {
     font-weight: 400;
     color: #1f2f3d;
+  }
+}
+
+.header {
+  .el-menu-item {
+    svg {
+      width: 26px;
+      vertical-align: middle;
+      margin-top: -2px;
+      margin-right: 10px;
+      transition: all .3s ease;
+    }
+    .all-articles-icon,
+    .drafts-icon,
+    .media-icon,
+    .settings-icon {
+      fill: #324157;
+      stroke: #eef1f6;
+      stroke-width: 1.5px;
+    }
+    .published-icon {
+      fill: #eef1f6;
+    }
+    &.is-active {
+      .all-articles-icon,
+      .drafts-icon,
+      .media-icon,
+      .settings-icon {
+        stroke: #20a0ff;
+      },
+      .published-icon {
+        fill: #20a0ff;
+      }
+    }
   }
 }
 
