@@ -1,9 +1,13 @@
 import request from 'superagent';
 import superagentJsonapify from 'superagent-jsonapify';
 import config from 'c0nfig';
+import { EventEmitter } from 'events';
 
 superagentJsonapify(request);
 
+class ApiEmitter extends EventEmitter {}
+
+const events = new ApiEmitter();
 const apiUrl = `${config.api.url}/v1`;
 
 let sessionTokenId;
@@ -49,6 +53,8 @@ function _request (resource, method = 'GET', params = {}, query = {}) {
     request(method, url)
       .set('Content-Type', 'application/vnd.api+json')
       .use(req => {
+        events.emit('request:start', req);
+
         if (sessionTokenId) {
           req.set('Authorization', sessionTokenId);
         }
@@ -56,9 +62,16 @@ function _request (resource, method = 'GET', params = {}, query = {}) {
       .query(query)
       .send(params)
       .then(res => {
+        events.emit('request:end', res);
         resolve(res.body && res.body.data || {});
       })
       .catch(err => {
+        events.emit('request:end', err.response);
+
+        if (err.status === 401) {
+          events.emit('unauthorized', err);
+        }
+
         reject(_parseJsonApiError(err));
       });
   });
@@ -85,5 +98,6 @@ function getArticles (opts = {}) {
 export default {
   authorize,
   setSession,
-  getArticles
+  getArticles,
+  events
 };

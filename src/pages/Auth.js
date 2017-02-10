@@ -21,9 +21,12 @@ export default {
     ]),
 
     login() {
+      const { _r } = this.$route.query;
+      const path = _r ? decodeURIComponent(_r) : '/articles';
+
       this.authorize(this.form)
         .then(() => {
-          this.$router.push('/articles');
+          this.$router.push(path);
         })
         .catch(err => {
           console.log(err);

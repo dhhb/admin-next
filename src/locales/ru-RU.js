@@ -20,6 +20,7 @@ export default {
     status: {
       published: 'Опубликованно',
       draft: 'Черновик'
-    }
+    },
+    createBtn: 'Создать статью'
   }
 };

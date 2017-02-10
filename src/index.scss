@@ -54,7 +54,7 @@ svg {
 #nprogress {
   pointer-events: auto;
   .bar {
-    background: #fff;
+    background: #20a0ff;
     z-index: 10000;
   }
   .peg {
@@ -77,12 +77,13 @@ svg {
   }
 }
 
+// header
 .header {
   .el-menu-item {
     svg {
       width: 26px;
       vertical-align: middle;
-      margin-top: -2px;
+      margin-top: -3px;
       margin-right: 10px;
       transition: all .3s ease;
     }
@@ -111,3 +112,14 @@ svg {
   }
 }
 
+// overwrite element.io
+.el-form-item__label {
+  font-weight: bold;
+}
+.el-input__inner {
+  border-radius: 2px;
+}
+.el-button--primary {
+  font-weight: bold;
+  border-radius: 2px;
+}

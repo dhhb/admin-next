@@ -14,7 +14,8 @@ if (sessionTokenId) {
 
 const store = new Vuex.Store({
   state: {
-    authenticated: false,
+    loading: false,
+    authenticated: true,
     articles: []
   },
 
@@ -48,6 +49,10 @@ const store = new Vuex.Store({
   },
 
   mutations: {
+    setLoading(state, value) {
+      state.loading = value;
+    },
+
     setAuthenticated(state, value) {
       state.authenticated = value;
     },
@@ -56,6 +61,18 @@ const store = new Vuex.Store({
       state.articles = [ ...articles ];
     }
   }
+});
+
+api.events.on('unauthorized', () => {
+  store.commit('setAuthenticated', false);
+});
+
+api.events.on('request:start', () => {
+  store.commit('setLoading', true);
+});
+
+api.events.on('request:end', () => {
+  store.commit('setLoading', false);
 });
 
 export default store;

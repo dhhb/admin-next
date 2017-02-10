@@ -20,6 +20,7 @@ export default {
     status: {
       published: 'Published',
       draft: 'Draft'
-    }
+    },
+    createBtn: 'Create article'
   }
 };

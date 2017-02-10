@@ -38,6 +38,10 @@ export default {
 
     sortAuthorColumn(a, b) {
       return a.author.name.localeCompare(b.author.name);
+    },
+
+    sortDataColumn(a, b) {
+
     }
   },
 
@@ -47,7 +51,16 @@ export default {
 
   template: `
     <div class="articles-list">
-      <h2>{{pageTitle}}</h2>
+      <el-row class="articles-list-sub-nav" :gutter="10">
+        <el-col :span="16">
+          <h2>{{pageTitle}}</h2>
+        </el-col>
+        <el-col :span="8">
+          <el-button class="create-article-btn" type="primary" icon="plus">
+            {{$t('articles.createBtn')}}
+          </el-button>
+        </el-col>
+      </el-row>
       <el-table
         :data="articles"
         empty-text="—"
@@ -68,9 +81,10 @@ export default {
 
         <el-table-column
           :label="$t('articles.tableHead.createdAt')"
+          :sort-method="sortDataColumn"
           sortable>
           <template scope="prop">
-            {{prop.createdAt | moment('llll')}}
+            {{prop.updatedAt | moment('llll')}}
           </template>
         </el-table-column>
 
