@@ -42,6 +42,14 @@ export default {
 
     sortDataColumn(a, b) {
 
+    },
+
+    goToArticle(id) {
+      if (id) {
+        this.$router.push(`/articles/${this.$route.params.type}/${id}`);
+      } else {
+        this.$router.push('/articles/drafts/new');
+      }
     }
   },
 
@@ -56,7 +64,7 @@ export default {
           <h2>{{pageTitle}}</h2>
         </el-col>
         <el-col :span="8">
-          <el-button class="create-article-btn" type="primary" icon="plus">
+          <el-button class="create-article-btn" type="primary" icon="plus" @click="goToArticle()">
             {{$t('articles.createBtn')}}
           </el-button>
         </el-col>
@@ -65,6 +73,11 @@ export default {
         :data="articles"
         empty-text="—"
         style="width: 100%">
+        <el-table-column
+          type="selection"
+          width="55">
+        </el-table-column>
+
         <el-table-column
           prop="title"
           :label="$t('articles.tableHead.title')"

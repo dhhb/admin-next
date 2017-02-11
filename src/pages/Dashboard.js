@@ -9,28 +9,30 @@ export default {
   template: `
     <div class="dashboard">
       <header class="header">
-        <el-menu
-          theme="dark"
-          mode="horizontal"
-          :router="true"
-          :default-active="$route.path">
-          <el-menu-item index="/articles">
-            <all-articles-icon />
-            {{$t('menu.allArticlesItem')}}
-          </el-menu-item>
-          <el-menu-item index="/articles/drafts">
-            <drafts-icon />
-            {{$t('menu.draftsItem')}}
-          </el-menu-item>
-          <el-menu-item index="/articles/published">
-            <published-icon />
-            {{$t('menu.publishedItem')}}
-          </el-menu-item>
-          <el-menu-item index="/settings">
-            <settings-icon />
-            {{$t('menu.settingsItem')}}
-          </el-menu-item>
-        </el-menu>
+        <div class="header-inner">
+          <el-menu
+            theme="dark"
+            mode="horizontal"
+            :router="true"
+            :default-active="$route.path">
+            <el-menu-item index="/articles/all">
+              <all-articles-icon />
+              {{$t('menu.allArticlesItem')}}
+            </el-menu-item>
+            <el-menu-item index="/articles/drafts">
+              <drafts-icon />
+              {{$t('menu.draftsItem')}}
+            </el-menu-item>
+            <el-menu-item index="/articles/published">
+              <published-icon />
+              {{$t('menu.publishedItem')}}
+            </el-menu-item>
+            <el-menu-item index="/settings">
+              <settings-icon />
+              {{$t('menu.settingsItem')}}
+            </el-menu-item>
+          </el-menu>
+        </div>
       </header>
 
       <div class="container">

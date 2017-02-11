@@ -33,10 +33,10 @@ const router = new VueRouter({
     beforeEnter: checkAuth,
     children: [{
       path: '',
-      redirect: 'articles'
+      redirect: 'articles/all'
     }, {
       path: 'articles',
-      component: ArticlesList
+      redirect: 'articles/all'
     }, {
       path: 'articles/:type',
       component: ArticlesList
