@@ -21,6 +21,8 @@ export default {
       published: 'Опубликованно',
       draft: 'Черновик'
     },
-    createBtn: 'Создать статью'
+    createBtn: 'Создать статью',
+    newTitle: 'Новая статья',
+    editTitle: 'Редактировать статью'
   }
 };

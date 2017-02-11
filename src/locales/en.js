@@ -21,6 +21,8 @@ export default {
       published: 'Published',
       draft: 'Draft'
     },
-    createBtn: 'Create article'
+    createBtn: 'Create article',
+    newTitle: 'New article',
+    editTitle: 'Edit article'
   }
 };
