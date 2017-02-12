@@ -1,3 +1,6 @@
+$fonts: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+$maxWidth: 1020px;
+
 html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -12,7 +15,11 @@ html, body, #app {
 }
 
 body {
-  font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: $fonts
+}
+
+button, input, optgroup, select, textarea {
+  font-family: $fonts;
 }
 
 svg {
@@ -66,8 +73,8 @@ svg {
 }
 
 .container {
-  width: 960px;
-  padding: 20px;
+  width: $maxWidth;
+  padding: 20px 0;
   margin-left: auto;
   margin-right: auto;
 
@@ -82,13 +89,27 @@ svg {
   width: 100%;
   height: 60px;
   background-color: #324157;
+
   &-inner {
-    width: 960px;
+    width: $maxWidth;
     height: 60px;
     padding: 0;
     margin-left: auto;
     margin-right: auto;
   }
+
+  .avatar {
+    float: left;
+    height: 60px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 10px;
+    img {
+      width: 28px;
+      margin-top: 14px;
+    }
+  }
+
   .el-menu {
     float: right;
     height: 100%;
@@ -135,6 +156,10 @@ svg {
   }
 }
 
+.avatar-tooltip {
+  text-align: center;
+}
+
 // overwrite element.io
 .el-form-item__label {
   font-weight: bold;
@@ -142,4 +167,8 @@ svg {
 .el-button {
   font-weight: 600 !important;
   transition: all .3s ease;
+}
+.el-dropdown-menu__item {
+  font-size: 14px;
+  padding: 0 16px !important;
 }

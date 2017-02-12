@@ -6,16 +6,25 @@ import api from '../utils/api';
 
 Vue.use(Vuex);
 
-const sessionTokenId = cookies.get(config.auth.cookieName);
+let userId;
+let sessionTokenId;
 
-if (sessionTokenId) {
+const authCookie = cookies.get(config.auth.cookieName);
+
+if (authCookie) {
+  const parsedSession = atob(authCookie).split('|');
+
+  sessionTokenId = parsedSession[0];
+  userId = parsedSession[1];
+
   api.setSession(sessionTokenId);
 }
 
 const store = new Vuex.Store({
   state: {
     loading: false,
-    authenticated: true,
+    authenticated: userId,
+    user: {},
     articles: []
   },
 
@@ -27,11 +36,11 @@ const store = new Vuex.Store({
         api.authorize(creds)
           .then(token => {
             api.setSession(token.id);
-            cookies.set(config.auth.cookieName, token.id, {
+            cookies.set(config.auth.cookieName, btoa(`${token.id}|${token.userId}`), {
               expires: new Date(token.expireAt)
             });
 
-            commit('setAuthenticated', true);
+            commit('setAuthenticated', token.userId);
             resolve(token);
           })
           .catch(err => {
@@ -44,6 +53,12 @@ const store = new Vuex.Store({
     requestArticles({ commit }) {
       api.getArticles({author: true}).then(articles => {
         commit('setArticles', articles || []);
+      });
+    },
+
+    requestUser({ commit, state }, id) {
+      api.getUserById(id || state.authenticated).then(user => {
+        commit('setUser', user || {});
       });
     }
   },
@@ -59,6 +74,10 @@ const store = new Vuex.Store({
 
     setArticles(state, articles) {
       state.articles = [ ...articles ];
+    },
+
+    setUser(state, user) {
+      state.user = { ...user };
     }
   }
 });

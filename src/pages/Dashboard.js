@@ -1,9 +1,27 @@
 import './dashboard.scss';
+
+import { mapState, mapActions } from 'vuex';
 import Icons from '../components/Icons';
 
 export default {
   components: {
     ...Icons
+  },
+
+  computed: {
+    ...mapState([
+      'user'
+    ])
+  },
+
+  methods: {
+    ...mapActions([
+      'requestUser'
+    ])
+  },
+
+  created() {
+    this.requestUser();
   },
 
   template: `
@@ -31,6 +49,14 @@ export default {
               <settings-icon />
               {{$t('menu.settingsItem')}}
             </el-menu-item>
+            <div class="avatar">
+              <el-tooltip effect="dark" placement="bottom">
+                <div class="avatar-tooltip" slot="content">
+                  {{user.name}}<br/>{{user.email}}
+                </div>
+                <img :src="user.pictureUrl" width="80" />
+              </el-tooltip>
+            </div>
           </el-menu>
         </div>
       </header>

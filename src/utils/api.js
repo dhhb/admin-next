@@ -85,6 +85,28 @@ function authorize (creds) {
   return _request('/token', 'POST', _createJsonApiRecord('token', creds));
 }
 
+function getUsers (opts = {}) {
+  let query = {};
+
+  if (opts.article) {
+    query.include = 'articles';
+  }
+
+  return _request('/users', 'GET', {}, query);
+}
+
+function getUser (id) {
+  return _request(`/users/${id}`, 'GET');
+}
+
+function updateUser (data) {
+  return _request(`/users/${data.id}`, 'PATCH', data);
+}
+
+function deleteUser (id) {
+  return _request(`/users/${id}`, 'DELETE');
+}
+
 function getArticles (opts = {}) {
   let query = {};
 
@@ -95,9 +117,29 @@ function getArticles (opts = {}) {
   return _request('/articles', 'GET', {}, query);
 }
 
+function getArticle (id) {
+  return _request(`/articles/${id}`, 'GET');
+}
+
+function updateArticle (data) {
+  return _request(`/articles/${data.id}`, 'PATCH', data);
+}
+
+function deleteArticle (id) {
+  return _request(`/articles/${id}`, 'DELETE');
+}
+
 export default {
+  events,
   authorize,
+  login: authorize, // alias
   setSession,
+  getUsers,
+  getUser,
+  updateUser,
+  deleteUser,
   getArticles,
-  events
+  getArticle,
+  updateArticle,
+  deleteArticle
 };

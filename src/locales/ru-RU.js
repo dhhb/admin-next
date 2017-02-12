@@ -28,10 +28,13 @@ export default {
     previewBtn: 'Посмотреть',
     publishBtn: 'Опубликовать',
     deleteBtn: 'Удалить',
+    duplicateBtn: 'Копировать',
+    actionsBtn: 'Действия',
     editForm: {
       title: 'Заголовок',
       intro: 'Вступление',
-      content: 'Текст'
+      content: 'Текст',
+      cover: 'Обложка'
     }
   }
 };
