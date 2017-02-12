@@ -66,8 +66,8 @@ svg {
 }
 
 .container {
-  width: 1020px;
-  padding: 20px 30px;
+  width: 960px;
+  padding: 20px;
   margin-left: auto;
   margin-right: auto;
 
@@ -83,9 +83,9 @@ svg {
   height: 60px;
   background-color: #324157;
   &-inner {
-    width: 1020px;
+    width: 960px;
     height: 60px;
-    padding: 0 30px;
+    padding: 0;
     margin-left: auto;
     margin-right: auto;
   }
@@ -139,10 +139,7 @@ svg {
 .el-form-item__label {
   font-weight: bold;
 }
-.el-input__inner {
-  border-radius: 2px;
-}
-.el-button--primary {
-  font-weight: bold;
-  border-radius: 2px;
+.el-button {
+  font-weight: 600 !important;
+  transition: all .3s ease;
 }

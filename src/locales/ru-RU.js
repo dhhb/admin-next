@@ -23,6 +23,15 @@ export default {
     },
     createBtn: 'Создать статью',
     newTitle: 'Новая статья',
-    editTitle: 'Редактировать статью'
+    editTitle: 'Редактировать статью',
+    saveBtn: 'Сохранить',
+    previewBtn: 'Посмотреть',
+    publishBtn: 'Опубликовать',
+    deleteBtn: 'Удалить',
+    editForm: {
+      title: 'Заголовок',
+      intro: 'Вступление',
+      content: 'Текст'
+    }
   }
 };
