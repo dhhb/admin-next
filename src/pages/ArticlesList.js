@@ -9,9 +9,6 @@ import {
 export default {
   data() {
     return {
-      deleteDialogVisible: false,
-      deleteDialogArticleId: null,
-      deleteDialogArticleTitle: ''
     };
   },
 
@@ -68,14 +65,19 @@ export default {
     },
 
     handleDelete(index, row) {
-      this.deleteDialogVisible = true;
-      this.deleteDialogArticleId = row.id;
-      this.deleteDialogArticleTitle = row.title;
-    },
-
-    handleDeleteArticle() {
-      this.deleteArticle(this.deleteDialogArticleId);
-      this.deleteDialogVisible = false;
+      this.$confirm(
+        this.$t('articles.deleteConfirm.text', {title: row.title}),
+        this.$t('articles.deleteConfirm.title'), {
+          confirmButtonText: this.$t('articles.deleteConfirm.okBtn'),
+          cancelButtonText: this.$t('articles.deleteConfirm.cancelBtn'),
+          type: 'warning'
+        }).then(() => {
+          this.deleteArticle(row.id);
+          this.$message({
+            type: 'success',
+            message: this.$t('articles.deleteConfirm.success')
+          });
+        });
     }
   },
 
@@ -173,14 +175,6 @@ export default {
           </template>
         </el-table-column>
       </el-table>
-
-      <el-dialog title="Удаление" v-model="deleteDialogVisible" size="tiny">
-        <span>Вы уверенны, что хотите удалить статью <em>"{{deleteDialogArticleTitle}}"</em>?</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="deleteDialogVisible = false">Нет</el-button>
-          <el-button type="primary" @click="handleDeleteArticle">Да</el-button>
-        </span>
-      </el-dialog>
     </div>
   `
 };

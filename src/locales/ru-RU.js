@@ -42,6 +42,17 @@ export default {
       contentPlaceholder: 'Раскройте тему статьи без каких либо ограничений! Поле также поддерживает Markdown.',
       cover: 'Обложка',
       keywords: 'Ключевые слова'
-    }
+    },
+    deleteConfirm: {
+      title: 'Удаление',
+      text: 'Вы уверенны, что хотите удалить статью "{title}"?',
+      okBtn: 'Да',
+      cancelBtn: 'Отмена',
+      success: 'Удаление завершено'
+    },
+    createSuccess: 'Статья успешно создана',
+    createFail: 'Ошибка при создании статьи',
+    saveSuccess: 'Изменения сохранены',
+    saveFail: 'Не удалось сохранить изменения'
   }
 };

@@ -69,7 +69,10 @@ export default {
 
     showKeywordInput() {
       this.keywordInputVisible = true;
-      // this.$refs.keywordInput.$el.firstElementChild.focus();
+
+      setTimeout(() => {
+        this.$refs.keywordInput.$el.children[0].focus();
+      }, 500);
     },
 
     handleKeywordInputConfirm() {
@@ -85,11 +88,32 @@ export default {
 
     saveArticle() {
       if (this.isNew) {
-        this.createArticle(this.form);
+        this.createArticle(this.form).then(article => {
+          this.$message({
+            type: 'success',
+            message: this.$t('articles.createSuccess')
+          });
+          this.$router.replace(`/articles/drafts/${article.id}`);
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: this.$t('articles.createFail')
+          });
+        });
       } else {
         this.updateArticle({
           data: this.form,
           id: this.selectedArticle.id
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: this.$t('articles.saveSuccess')
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: this.$t('articles.saveFail')
+          });
         });
       }
     }

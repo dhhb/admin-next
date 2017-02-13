@@ -79,14 +79,24 @@ const store = new Vuex.Store({
     },
 
     createArticle({ commit }, data) {
-      api.createArticle(data).then(article => {
-        commit('setSelectedArticle', article);
+      return new Promise((resolve, reject) => {
+        api.createArticle(data).then(article => {
+          commit('setSelectedArticle', article);
+          resolve(article);
+        }).catch(err => {
+          reject(err);
+        });
       });
     },
 
     updateArticle({ commit }, { data, id }) {
-      api.updateArticle(data, id).then(article => {
-        commit('setSelectedArticle', article);
+      return new Promise((resolve, reject) => {
+        api.updateArticle(data, id).then(article => {
+          commit('setSelectedArticle', article);
+          resolve(article);
+        }).catch(err => {
+          reject(err);
+        });
       });
     },
 
