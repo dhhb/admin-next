@@ -1,7 +1,26 @@
+$keywordHeight: 28px;
+
 .articles-edit-form {
-  width: 90%;
   .save-btn {
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
+  }
+  .el-tag.article-keyword {
+    height: $keywordHeight;
+    vertical-align: middle;
+    line-height: 26px;
+    margin-right: 8px;
+  }
+  .el-button.article-button-new-keyword{
+    height: $keywordHeight;
+    font-weight: 500;
+  }
+  .el-input.article-input-new-keyword {
+    display: inline-block;
+    width: 90px;
+    height: $keywordHeight;
+    input {
+      height: $keywordHeight;
+    }
   }
 }

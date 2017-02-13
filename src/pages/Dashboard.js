@@ -50,7 +50,7 @@ export default {
               {{$t('menu.settingsItem')}}
             </el-menu-item>
             <div class="avatar">
-              <el-tooltip effect="dark" placement="bottom">
+              <el-tooltip effect="dark" placement="bottom-end">
                 <div class="avatar-tooltip" slot="content">
                   {{user.name}}<br/>{{user.email}}
                 </div>

@@ -25,7 +25,8 @@ const store = new Vuex.Store({
     loading: false,
     authenticated: userId,
     user: {},
-    articles: []
+    articles: [],
+    selectedArticle: null
   },
 
   getters: {},
@@ -57,9 +58,42 @@ const store = new Vuex.Store({
     },
 
     requestUser({ commit, state }, id) {
-      api.getUserById(id || state.authenticated).then(user => {
+      const userId = id || state.authenticated;
+
+      if (!userId) {
+        return;
+      }
+
+      api.getUser(userId).then(user => {
         commit('setUser', user || {});
       });
+    },
+
+    requestArticle({ commit }, id) {
+      api.getArticle(id).then(article => {
+        commit('setSelectedArticle', article);
+      });
+    },
+
+    createArticle({ commit }, data) {
+      api.createArticle(data).then(article => {
+        commit('setSelectedArticle', article);
+      });
+    },
+
+    updateArticle({ commit }, { data, id }) {
+      api.updateArticle(data, id).then(article => {
+        commit('setSelectedArticle', article);
+      });
+    },
+
+    deleteArticle({ commit, state }, id) {
+      commit('deleteArticle', id);
+      api.deleteArticle(id);
+    },
+
+    resetSelectedArticle({ commit }) {
+      commit('setSelectedArticle', {});
     }
   },
 
@@ -78,6 +112,18 @@ const store = new Vuex.Store({
 
     setUser(state, user) {
       state.user = { ...user };
+    },
+
+    setSelectedArticle(state, article) {
+      state.selectedArticle = { ...article };
+    },
+
+    deleteArticle(state, id) {
+      const index = state.articles.findIndex(article => article.id === id);
+
+      if (index > -1) {
+        state.articles.splice(index, 1);
+      }
     }
   }
 });

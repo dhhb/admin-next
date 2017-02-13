@@ -46,7 +46,7 @@ function _parseJsonApiError (err = {}) {
   return jsonData;
 }
 
-function _request (resource, method = 'GET', params = {}, query = {}) {
+function _request (resource, method = 'GET', params, query) {
   const url = `${apiUrl}${resource}`;
 
   return new Promise((resolve, reject) => {
@@ -99,8 +99,12 @@ function getUser (id) {
   return _request(`/users/${id}`, 'GET');
 }
 
-function updateUser (data) {
-  return _request(`/users/${data.id}`, 'PATCH', data);
+function createUser (data) {
+  return _request('/users', 'POST', _createJsonApiRecord('users', data));
+}
+
+function updateUser (data, id) {
+  return _request(`/users/${id}`, 'PATCH', _createJsonApiRecord('users', id, data));
 }
 
 function deleteUser (id) {
@@ -121,8 +125,12 @@ function getArticle (id) {
   return _request(`/articles/${id}`, 'GET');
 }
 
-function updateArticle (data) {
-  return _request(`/articles/${data.id}`, 'PATCH', data);
+function createArticle (data) {
+  return _request('/articles', 'POST', _createJsonApiRecord('articles', data));
+}
+
+function updateArticle (data, id) {
+  return _request(`/articles/${id}`, 'PATCH', _createJsonApiRecord('articles', id, data));
 }
 
 function deleteArticle (id) {
@@ -136,10 +144,12 @@ export default {
   setSession,
   getUsers,
   getUser,
+  createUser,
   updateUser,
   deleteUser,
   getArticles,
   getArticle,
+  createArticle,
   updateArticle,
   deleteArticle
 };

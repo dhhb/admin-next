@@ -14,8 +14,9 @@ export default {
     tableHead: {
       title: 'Заголовок',
       author: 'Автор',
-      createdAt: 'Дата создания',
-      status: 'Статус'
+      createdAt: 'Обновлено',
+      status: 'Статус',
+      actions: 'Действия'
     },
     status: {
       published: 'Опубликованно',
@@ -29,12 +30,18 @@ export default {
     publishBtn: 'Опубликовать',
     deleteBtn: 'Удалить',
     duplicateBtn: 'Копировать',
-    actionsBtn: 'Действия',
+    actionsBtn: 'Другое',
+    keywordBtn: 'Добавить',
+    editBtn: 'Редактировать',
     editForm: {
       title: 'Заголовок',
+      titlePlaceholder: 'к примеру: В России вырастили уникальный сталактит из фекалий',
       intro: 'Вступление',
+      introPlaceholder: 'О чем эта статья? Небольшое превью перед основным текстом. Поле поддерживает Markdown.',
       content: 'Текст',
-      cover: 'Обложка'
+      contentPlaceholder: 'Раскройте тему статьи без каких либо ограничений! Поле также поддерживает Markdown.',
+      cover: 'Обложка',
+      keywords: 'Ключевые слова'
     }
   }
 };

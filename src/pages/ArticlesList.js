@@ -7,6 +7,14 @@ import {
 } from 'vuex';
 
 export default {
+  data() {
+    return {
+      deleteDialogVisible: false,
+      deleteDialogArticleId: null,
+      deleteDialogArticleTitle: ''
+    };
+  },
+
   computed: {
     ...mapState([
       'articles'
@@ -29,7 +37,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'requestArticles'
+      'requestArticles',
+      'deleteArticle'
     ]),
 
     sortTitleColumn(a, b) {
@@ -44,12 +53,29 @@ export default {
 
     },
 
-    goToArticle(id) {
+    goToArticle(id, draft) {
       if (id) {
-        this.$router.push(`/articles/${this.$route.params.type}/${id}`);
+        const type = draft ? 'drafts' : 'published';
+
+        this.$router.push(`/articles/${type}/${id}`);
       } else {
         this.$router.push('/articles/drafts/new');
       }
+    },
+
+    handleEdit(index, row) {
+      this.goToArticle(row.id, row.draft);
+    },
+
+    handleDelete(index, row) {
+      this.deleteDialogVisible = true;
+      this.deleteDialogArticleId = row.id;
+      this.deleteDialogArticleTitle = row.title;
+    },
+
+    handleDeleteArticle() {
+      this.deleteArticle(this.deleteDialogArticleId);
+      this.deleteDialogVisible = false;
     }
   },
 
@@ -109,7 +135,46 @@ export default {
               $t('articles.status.published')}}
           </template>
         </el-table-column>
+
+        <el-table-column
+          :context="_self"
+          :label="$t('articles.tableHead.actions')">
+          <template scope="scope">
+            <el-tooltip
+              class="articles-actions-tooltip"
+              effect="dark"
+              placement="bottom"
+              :content="$t('articles.editBtn')">
+              <el-button
+                type="primary"
+                icon="edit"
+                size="small"
+                @click="handleEdit(scope.$index, scope.row)">
+              </el-button>
+            </el-tooltip>
+            <el-tooltip
+              class="articles-actions-tooltip"
+              effect="dark"
+              placement="bottom"
+              :content="$t('articles.deleteBtn')">
+              <el-button
+                type="danger"
+                icon="delete"
+                size="small"
+                @click="handleDelete(scope.$index, scope.row)">
+              </el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
+
+      <el-dialog title="Удаление" v-model="deleteDialogVisible" size="tiny">
+        <span>Вы уверенны, что хотите удалить статью <em>"{{deleteDialogArticleTitle}}"</em>?</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="deleteDialogVisible = false">Нет</el-button>
+          <el-button type="primary" @click="handleDeleteArticle">Да</el-button>
+        </span>
+      </el-dialog>
     </div>
   `
 };
