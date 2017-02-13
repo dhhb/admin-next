@@ -69,6 +69,7 @@ export default {
 
     showKeywordInput() {
       this.keywordInputVisible = true;
+      // this.$refs.keywordInput.$el.firstElementChild.focus();
     },
 
     handleKeywordInputConfirm() {
@@ -156,15 +157,16 @@ export default {
             </el-tag>
             <el-input
               class="article-input-new-keyword"
-              v-if="keywordInputVisible"
+              v-show="keywordInputVisible"
               v-model="keywordInputValue"
+              ref="keywordInput"
               size="mini"
               @keyup.enter.native="handleKeywordInputConfirm"
               @blur="handleKeywordInputConfirm">
             </el-input>
             <el-button
               class="article-button-new-keyword"
-              v-else
+              v-show="!keywordInputVisible"
               size="small"
               icon="plus"
               @click="showKeywordInput">

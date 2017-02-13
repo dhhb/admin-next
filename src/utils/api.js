@@ -118,6 +118,10 @@ function getArticles (opts = {}) {
     query.include = 'author';
   }
 
+  if (opts.filter) {
+    query.filter = { ...opts.filter };
+  }
+
   return _request('/articles', 'GET', {}, query);
 }
 

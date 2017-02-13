@@ -51,8 +51,11 @@ const store = new Vuex.Store({
       });
     },
 
-    requestArticles({ commit }) {
-      api.getArticles({author: true}).then(articles => {
+    requestArticles({ commit }, type) {
+      let filter = type === 'drafts' ? {draft: true} :
+        type === 'published' ? {draft: false} : {};
+
+      api.getArticles({author: true, filter}).then(articles => {
         commit('setArticles', articles || []);
       });
     },

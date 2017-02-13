@@ -79,8 +79,14 @@ export default {
     }
   },
 
+  watch: {
+    $route(val) {
+      this.requestArticles(val.params.type);
+    }
+  },
+
   created() {
-    this.requestArticles();
+    this.requestArticles(this.$route.params.type);
   },
 
   template: `
