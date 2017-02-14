@@ -105,6 +105,14 @@ const store = new Vuex.Store({
       api.deleteArticle(id);
     },
 
+    publishArticle({ dispatch }, id) {
+      return dispatch('updateArticle', {data: {publish: true}, id});
+    },
+
+    unpublishArticle({ dispatch }, id) {
+      return dispatch('updateArticle', {data: {publish: false}, id});
+    },
+
     resetSelectedArticle({ commit }) {
       commit('setSelectedArticle', {});
     }

@@ -68,8 +68,8 @@ export default {
       this.$confirm(
         this.$t('articles.deleteConfirm.text', {title: row.title}),
         this.$t('articles.deleteConfirm.title'), {
-          confirmButtonText: this.$t('articles.deleteConfirm.okBtn'),
-          cancelButtonText: this.$t('articles.deleteConfirm.cancelBtn'),
+          confirmButtonText: this.$t('articles.okBtn'),
+          cancelButtonText: this.$t('articles.cancelBtn'),
           type: 'warning'
         }).then(() => {
           this.deleteArticle(row.id);

@@ -31,12 +31,24 @@ export default {
       return this.routeArticleId === 'new';
     },
 
+    isDraft() {
+      return this.selectedArticle && this.selectedArticle.draft;
+    },
+
     pageTitle() {
       if (this.isNew) {
         return this.$t('articles.newTitle');
       }
 
       return this.$t('articles.editTitle');
+    },
+
+    publishTitle() {
+      if (this.isDraft) {
+        return this.$t('articles.publishBtn');
+      }
+
+      return this.$t('articles.unpublishBtn');
     }
   },
 
@@ -56,6 +68,9 @@ export default {
       'requestArticle',
       'createArticle',
       'updateArticle',
+      'deleteArticle',
+      'publishArticle',
+      'unpublishArticle',
       'resetSelectedArticle'
     ]),
 
@@ -115,6 +130,107 @@ export default {
             message: this.$t('articles.saveFail')
           });
         });
+      }
+    },
+
+    handleCommand(cmd) {
+      if (cmd === 'delete') {
+        return this.handleDelete();
+      }
+
+      if (cmd === 'duplicate') {
+        return this.handleDuplicate();
+      }
+    },
+
+    handlePublish() {
+      this.$confirm(
+        this.$t('articles.publishConfirm.text', {title: this.selectedArticle.title}),
+        this.$t('articles.publishConfirm.title'), {
+          confirmButtonText: this.$t('articles.okBtn'),
+          cancelButtonText: this.$t('articles.cancelBtn'),
+          type: 'warning'
+        }).then(() => {
+          this.publishArticle(this.selectedArticle.id)
+            .then(() => {
+              this.$message({
+                type: 'success',
+                message: this.$t('articles.publishConfirm.success')
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: 'error',
+                message: this.$t('articles.publishConfirm.fail')
+              });
+            });
+        });
+    },
+
+    handleUnpublish() {
+      this.$confirm(
+        this.$t('articles.unpublishConfirm.text', {title: this.selectedArticle.title}),
+        this.$t('articles.unpublishConfirm.title'), {
+          confirmButtonText: this.$t('articles.okBtn'),
+          cancelButtonText: this.$t('articles.cancelBtn'),
+          type: 'warning'
+        }).then(() => {
+          this.unpublishArticle(this.selectedArticle.id)
+            .then(() => {
+              this.$message({
+                type: 'success',
+                message: this.$t('articles.unpublishConfirm.success')
+              });
+            })
+            .catch(() => {
+              this.$message({
+                type: 'error',
+                message: this.$t('articles.unpublishConfirm.fail')
+              });
+            });
+        });
+    },
+
+    handleDelete() {
+      this.$confirm(
+        this.$t('articles.deleteConfirm.text', {title: this.selectedArticle.title}),
+        this.$t('articles.deleteConfirm.title'), {
+          confirmButtonText: this.$t('articles.okBtn'),
+          cancelButtonText: this.$t('articles.cancelBtn'),
+          type: 'warning'
+        }).then(() => {
+          this.deleteArticle(this.selectedArticle.id);
+          this.$message({
+            type: 'success',
+            message: this.$t('articles.deleteConfirm.success')
+          });
+          this.$router.push('/articles');
+        });
+    },
+
+    handleDuplicate() {
+      this.createArticle({
+        ...this.form,
+        title: `${this.$t('articles.duplicatePrefix')} ${this.form.title}`
+      }).then(article => {
+        this.$message({
+          type: 'success',
+          message: this.$t('articles.duplicateSuccess')
+        });
+        this.$router.replace(`/articles/drafts/${article.id}`);
+      }).catch(() => {
+        this.$message({
+          type: 'error',
+          message: this.$t('articles.duplicateFail')
+        });
+      });
+    },
+
+    handleAction() {
+      if (this.selectedArticle.draft) {
+        this.handlePublish();
+      } else {
+        this.handleUnpublish();
       }
     }
   },
@@ -199,15 +315,20 @@ export default {
           </el-form-item>
           <el-form-item>
             <el-button class="save-btn" type="primary" @click="saveArticle">
-              {{$t('articles.saveBtn')}}
+              {{$t('articles.publishBtn')}}
             </el-button>
-            <el-dropdown v-if="!isNew" split-button type="primary" trigger="click">
-              {{$t('articles.actionsBtn')}}
+            <el-dropdown
+              v-if="!isNew"
+              split-button
+              type="primary"
+              trigger="click"
+              @click="handleAction"
+              @command="handleCommand">
+              {{publishTitle}}
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>{{$t('articles.publishBtn')}}</el-dropdown-item>
-                <el-dropdown-item>{{$t('articles.previewBtn')}}</el-dropdown-item>
-                <el-dropdown-item>{{$t('articles.duplicateBtn')}}</el-dropdown-item>
-                <el-dropdown-item>{{$t('articles.deleteBtn')}}</el-dropdown-item>
+                <el-dropdown-item command="preview">{{$t('articles.previewBtn')}}</el-dropdown-item>
+                <el-dropdown-item command="duplicate">{{$t('articles.duplicateBtn')}}</el-dropdown-item>
+                <el-dropdown-item command="delete">{{$t('articles.deleteBtn')}}</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-form-item>
