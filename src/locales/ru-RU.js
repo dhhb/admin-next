@@ -14,7 +14,7 @@ export default {
     tableHead: {
       title: 'Заголовок',
       author: 'Автор',
-      createdAt: 'Обновлено',
+      updatedAt: 'Обновлено',
       status: 'Статус',
       actions: 'Действия'
     },

@@ -1,10 +1,6 @@
 $keywordHeight: 28px;
 
 .articles-edit-form {
-  .save-btn {
-    float: left;
-    margin-right: 10px;
-  }
   .el-tag.article-keyword {
     height: $keywordHeight;
     vertical-align: middle;
@@ -22,5 +18,18 @@ $keywordHeight: 28px;
     input {
       height: $keywordHeight;
     }
+  }
+}
+
+
+.articles-item-actions {
+  float: right;
+  margin: 15px 0;
+  .save-btn {
+    float: left;
+  }
+  .el-dropdown {
+    display: inline-block;
+    margin-left: 10px;
   }
 }

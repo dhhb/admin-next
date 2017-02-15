@@ -1,5 +1,7 @@
 import './articles-list.scss';
 
+import moment from 'moment';
+
 import {
   mapState,
   mapActions,
@@ -46,8 +48,8 @@ export default {
       return a.author.name.localeCompare(b.author.name);
     },
 
-    sortDataColumn(a, b) {
-
+    dateFormatter(row) {
+      return moment(row.updatedAt).format('llll');
     },
 
     goToArticle(id, draft) {
@@ -103,15 +105,11 @@ export default {
           </el-button>
         </el-col>
       </el-row>
+
       <el-table
         :data="articles"
         empty-text="—"
         style="width: 100%">
-        <el-table-column
-          type="selection"
-          width="55">
-        </el-table-column>
-
         <el-table-column
           prop="title"
           :label="$t('articles.tableHead.title')"
@@ -127,26 +125,30 @@ export default {
         </el-table-column>
 
         <el-table-column
-          :label="$t('articles.tableHead.createdAt')"
-          :sort-method="sortDataColumn"
+          :label="$t('articles.tableHead.updatedAt')"
+          width="210"
+          prop="updatedAt"
+          :formatter="dateFormatter"
           sortable>
-          <template scope="prop">
-            {{prop.updatedAt | moment('llll')}}
-          </template>
         </el-table-column>
 
         <el-table-column
-          :label="$t('articles.tableHead.status')">
+          :label="$t('articles.tableHead.status')"
+          width="175">
           <template scope="prop">
-            {{prop.row.draft ?
-              $t('articles.status.draft') :
-              $t('articles.status.published')}}
+            <span v-if="prop.row.draft" class="articles-list-status draft">
+              {{$t('articles.status.draft')}}
+            </span>
+            <span v-else class="articles-list-status published">
+              {{$t('articles.status.published')}}
+            </span>
           </template>
         </el-table-column>
 
         <el-table-column
           :context="_self"
-          :label="$t('articles.tableHead.actions')">
+          :label="$t('articles.tableHead.actions')"
+          width="120">
           <template scope="scope">
             <el-tooltip
               class="articles-actions-tooltip"

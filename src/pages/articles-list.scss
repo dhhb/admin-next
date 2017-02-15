@@ -20,4 +20,15 @@
     display: inline-block;
     margin-right: 7px;
   }
+
+  .articles-list-status {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    &.draft {
+      color: #F7BA2A;
+    }
+    &.published {
+      color: #13CE66;
+    }
+  }
 }

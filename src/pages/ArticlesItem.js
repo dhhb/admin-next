@@ -1,6 +1,7 @@
 import './articles-item.scss';
 
 import Vue from 'vue';
+import Mousetrap from 'mousetrap';
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -241,13 +242,48 @@ export default {
     }
   },
 
+  mounted() {
+    Vue.nextTick(() => {
+      Mousetrap.bind(['ctrl+s', 'command+s'], e => {
+        e.preventDefault();
+        this.saveArticle();
+      });
+    });
+  },
+
   destroyed() {
     this.resetSelectedArticle();
   },
 
   template: `
     <div class="articles-item">
-      <h2>{{pageTitle}}</h2>
+      <el-row class="articles-item-sub-nav" :gutter="10">
+        <el-col :span="16">
+          <h2>{{pageTitle}}</h2>
+        </el-col>
+        <el-col :span="8">
+          <div class="articles-item-actions">
+            <el-button class="save-btn" type="primary" @click="saveArticle">
+              {{$t('articles.saveBtn')}}
+            </el-button>
+            <el-dropdown
+              v-if="!isNew"
+              split-button
+              type="primary"
+              trigger="click"
+              @click="handleAction"
+              @command="handleCommand">
+              {{publishTitle}}
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="preview">{{$t('articles.previewBtn')}}</el-dropdown-item>
+                <el-dropdown-item command="duplicate">{{$t('articles.duplicateBtn')}}</el-dropdown-item>
+                <el-dropdown-item command="delete">{{$t('articles.deleteBtn')}}</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </el-col>
+      </el-row>
+
       <div class="articles-edit-form">
         <el-form :model="form" ref="form" label-width="145px" label-position="left">
           <el-form-item :label="$t('articles.editForm.title')">
@@ -279,6 +315,7 @@ export default {
           <el-form-item :label="$t('articles.editForm.content')">
             <el-input
               type="textarea"
+              class="mousetrap"
               :autosize="{minRows: 10, maxRows: 30}"
               :rows="5"
               v-model="form.content"
@@ -290,6 +327,7 @@ export default {
             <el-tag
               class="article-keyword"
               v-for="keyword in form.keywords"
+              type="primary"
               :closable="true"
               :close-transition="true"
               @close="handleCloseKeyword(keyword)">
@@ -312,25 +350,6 @@ export default {
               @click="showKeywordInput">
               {{$t('articles.keywordBtn')}}
             </el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button class="save-btn" type="primary" @click="saveArticle">
-              {{$t('articles.publishBtn')}}
-            </el-button>
-            <el-dropdown
-              v-if="!isNew"
-              split-button
-              type="primary"
-              trigger="click"
-              @click="handleAction"
-              @command="handleCommand">
-              {{publishTitle}}
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="preview">{{$t('articles.previewBtn')}}</el-dropdown-item>
-                <el-dropdown-item command="duplicate">{{$t('articles.duplicateBtn')}}</el-dropdown-item>
-                <el-dropdown-item command="delete">{{$t('articles.deleteBtn')}}</el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
           </el-form-item>
         </el-form>
       </div>
