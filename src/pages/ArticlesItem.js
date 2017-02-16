@@ -312,8 +312,17 @@ export default {
             </el-input>
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.cover')">
+            <el-input
+              type="file"
+              auto-complete="off">
+            </el-input>
+          </el-form-item>
+          <el-form-item :label="$t('articles.editForm.cover')">
             <el-upload
-              action="//jsonplaceholder.typicode.com/posts/"
+              action=""
+              :multiple="false"
+              :show-upload-list="false"
+              thumbnail-mode
               type="drag">
               <i class="el-icon-upload"></i>
               <div class="el-dragger__text">Drop file here or <em>click to upload</em></div>
