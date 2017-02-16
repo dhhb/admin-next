@@ -21,6 +21,12 @@ $keywordHeight: 28px;
   }
 }
 
+.articles-item-info {
+  margin-bottom: 25px;
+  .updated {
+    font-size: 13px
+  }
+}
 
 .articles-item-actions {
   float: right;

@@ -1,7 +1,7 @@
 import './articles-item.scss';
 
 import Vue from 'vue';
-import Mousetrap from 'mousetrap';
+import Mousetrap from '../utils/mousetrap';
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -244,7 +244,7 @@ export default {
 
   mounted() {
     Vue.nextTick(() => {
-      Mousetrap.bind(['ctrl+s', 'command+s'], e => {
+      Mousetrap.bindGlobal(['ctrl+s', 'command+s'], e => {
         e.preventDefault();
         this.saveArticle();
       });
@@ -284,6 +284,14 @@ export default {
         </el-col>
       </el-row>
 
+      <el-row class="articles-item-info" :gutter="10">
+        <el-col :span="16">
+          <div v-if="selectedArticle" class="updated">
+            <em>{{$t('articles.lastUpdate')}} {{selectedArticle.updatedAt | moment('llll')}}</em>
+          </div>
+        </el-col>
+      </el-row>
+
       <div class="articles-edit-form">
         <el-form :model="form" ref="form" label-width="145px" label-position="left">
           <el-form-item :label="$t('articles.editForm.title')">
@@ -297,13 +305,13 @@ export default {
           <el-form-item :label="$t('articles.editForm.intro')">
             <el-input
               type="textarea"
-              :autosize="{minRows: 3, maxRows: 6}"
+              :autosize="{minRows: 5, maxRows: 10}"
               v-model="form.intro"
               auto-complete="off"
               :placeholder="$t('articles.editForm.introPlaceholder')">
             </el-input>
           </el-form-item>
-          <!-- el-form-item :label="$t('articles.editForm.cover')">
+          <el-form-item :label="$t('articles.editForm.cover')">
             <el-upload
               action="//jsonplaceholder.typicode.com/posts/"
               type="drag">
@@ -311,12 +319,12 @@ export default {
               <div class="el-dragger__text">Drop file here or <em>click to upload</em></div>
               <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
             </el-upload>
-          </el-form-item -->
+          </el-form-item>
           <el-form-item :label="$t('articles.editForm.content')">
             <el-input
               type="textarea"
               class="mousetrap"
-              :autosize="{minRows: 10, maxRows: 30}"
+              :autosize="{minRows: 15, maxRows: 50}"
               :rows="5"
               v-model="form.content"
               auto-complete="off"

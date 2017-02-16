@@ -70,6 +70,7 @@ export default {
     saveFail: 'Не удалось сохранить изменения',
     duplicateSuccess: 'Копия статьи успешно создана',
     duplicateFail: 'Не удалось создать копию статьи',
-    duplicatePrefix: 'Копия'
+    duplicatePrefix: 'Копия',
+    lastUpdate: 'Последнее сохранение:'
   }
 };
