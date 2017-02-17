@@ -73,5 +73,8 @@ export default {
     duplicateFail: 'Не удалось создать копию статьи',
     duplicatePrefix: 'Копия',
     lastUpdate: 'Последнее сохранение в'
+  },
+  settings: {
+    title: 'Настройки'
   }
 };
