@@ -57,7 +57,7 @@
     "superagent": "^3.4.1",
     "superagent-jsonapify": "^1.4.2",
     "vue": "^2.1.10",
-    "vue-base64-file-upload": "^1.0.2",
+    "vue-base64-file-upload": "^1.0.4",
     "vue-i18n": "^5.0.0",
     "vue-moment": "^2.0.2",
     "vue-router": "^2.2.0",

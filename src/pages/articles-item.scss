@@ -8,8 +8,9 @@ $keywordHeight: 28px;
     margin-right: 8px;
   }
   .el-button.article-button-new-keyword{
+    color: #48576a;
+    font-weight: 500 !important;
     height: $keywordHeight;
-    font-weight: 500;
   }
   .el-input.article-input-new-keyword {
     display: inline-block;
@@ -22,10 +23,18 @@ $keywordHeight: 28px;
 }
 
 .articles-item-info {
-  margin-bottom: 25px;
+  margin-bottom: 15px;
+  text-align: right;
   .updated {
-    font-size: 13px
+    color: #909dab;
+    font-size: 11px;
+    text-transform: uppercase;
   }
+}
+
+.articles-item-cover-image {
+  height: 300px;
+  border-radius: 5px;
 }
 
 .articles-item-actions {

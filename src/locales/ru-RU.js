@@ -44,6 +44,7 @@ export default {
       content: 'Текст',
       contentPlaceholder: 'Раскройте тему статьи без каких либо ограничений! Поле также поддерживает Markdown.',
       cover: 'Обложка',
+      coverPlaceholder: 'Нажмите, чтобы выбрать изображение для обложки',
       keywords: 'Ключевые слова'
     },
     deleteConfirm: {
@@ -71,6 +72,6 @@ export default {
     duplicateSuccess: 'Копия статьи успешно создана',
     duplicateFail: 'Не удалось создать копию статьи',
     duplicatePrefix: 'Копия',
-    lastUpdate: 'Последнее сохранение:'
+    lastUpdate: 'Последнее сохранение в'
   }
 };

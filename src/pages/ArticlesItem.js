@@ -16,9 +16,9 @@ export default {
         title: '',
         intro: '',
         content: '',
-        cover: '',
         keywords: []
       },
+      coverUrl: null,
       keywordInputValue: '',
       keywordInputVisible: false
     };
@@ -65,6 +65,11 @@ export default {
         Vue.set(this.form, 'intro', val.intro);
         Vue.set(this.form, 'content', val.content);
         Vue.set(this.form, 'keywords', val.keywords);
+        Vue.set(this, 'coverUrl', val.coverUrl);
+
+        if (val.coverUrl) {
+          Vue.delete(this.form, 'coverData');
+        }
       }
     }
   },
@@ -238,6 +243,10 @@ export default {
       } else {
         this.handleUnpublish();
       }
+    },
+
+    handleCoverLoad(dataUri) {
+      this.form.coverData = dataUri;
     }
   },
 
@@ -290,9 +299,9 @@ export default {
       </el-row>
 
       <el-row class="articles-item-info" :gutter="10">
-        <el-col :span="16">
+        <el-col :span="24">
           <div v-if="selectedArticle" class="updated">
-            <em>{{$t('articles.lastUpdate')}} {{selectedArticle.updatedAt | moment('llll')}}</em>
+            {{$t('articles.lastUpdate')}} {{selectedArticle.updatedAt | moment('llll')}}
           </div>
         </el-col>
       </el-row>
@@ -307,6 +316,14 @@ export default {
               :placeholder="$t('articles.editForm.titlePlaceholder')">
             </el-input>
           </el-form-item>
+          <el-form-item :label="$t('articles.editForm.cover')">
+            <vue-base64-file-upload
+              input-class="el-input__inner"
+              image-class="articles-item-cover-image"
+              :default-preview="coverUrl"
+              :placeholder="$t('articles.editForm.coverPlaceholder')"
+              @load="handleCoverLoad" />
+          </el-form-item>
           <el-form-item :label="$t('articles.editForm.intro')">
             <el-input
               type="textarea"
@@ -315,9 +332,6 @@ export default {
               auto-complete="off"
               :placeholder="$t('articles.editForm.introPlaceholder')">
             </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('articles.editForm.cover')">
-            <vue-base64-file-upload />
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.content')">
             <el-input
