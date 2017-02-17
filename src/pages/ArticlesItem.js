@@ -1,10 +1,15 @@
 import './articles-item.scss';
 
 import Vue from 'vue';
+import VueBase64FileUpload from 'vue-base64-file-upload';
 import Mousetrap from '../utils/mousetrap';
 import { mapState, mapActions } from 'vuex';
 
 export default {
+  components: {
+    VueBase64FileUpload
+  },
+
   data() {
     return {
       form: {
@@ -312,22 +317,7 @@ export default {
             </el-input>
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.cover')">
-            <el-input
-              type="file"
-              auto-complete="off">
-            </el-input>
-          </el-form-item>
-          <el-form-item :label="$t('articles.editForm.cover')">
-            <el-upload
-              action=""
-              :multiple="false"
-              :show-upload-list="false"
-              thumbnail-mode
-              type="drag">
-              <i class="el-icon-upload"></i>
-              <div class="el-dragger__text">Drop file here or <em>click to upload</em></div>
-              <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-            </el-upload>
+            <vue-base64-file-upload />
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.content')">
             <el-input
