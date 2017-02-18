@@ -68,7 +68,18 @@ const store = new Vuex.Store({
       }
 
       api.getUser(userId).then(user => {
-        commit('setUser', user || {});
+        commit('setUser', user);
+      });
+    },
+
+    updateUser({ commit, state }, data) {
+      return new Promise((resolve, reject) => {
+        api.updateUser(data, state.authenticated).then(user => {
+          commit('setUser', user);
+          resolve(user);
+        }).catch(err => {
+          reject(err);
+        });
       });
     },
 

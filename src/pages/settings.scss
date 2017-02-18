@@ -1,0 +1,14 @@
+.settings-picture-image {
+  width: 140px;
+  border-radius: 50%;
+  border: 1px solid #bfcbd9;
+  padding: 5px;
+}
+
+.settings-actions {
+  float: right;
+  margin: 15px 0;
+  .save-btn {
+    float: left;
+  }
+}

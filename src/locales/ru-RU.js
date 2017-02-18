@@ -75,6 +75,15 @@ export default {
     lastUpdate: 'Последнее сохранение в'
   },
   settings: {
-    title: 'Настройки'
+    title: 'Настройки',
+    editForm: {
+      email: 'Электронный адрес',
+      name: 'Имя профиля',
+      picture: 'Изображение',
+      picturePlaceholder: 'Нажмите, чтобы изменить изображение профиля'
+    },
+    updateBtn: 'Обновить профиль',
+    updateSuccess: 'Профиль успешно обновлен',
+    updateFail: 'Не удалось обновить профиль'
   }
 };
