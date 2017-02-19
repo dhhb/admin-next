@@ -5,5 +5,8 @@ module.exports = {
   },
   auth: {
     cookieName: process.env.AUTH_COOKIE_NAME || 'auth_token'
+  },
+  analytics: {
+    url: process.env.ANALYTICS_URL || 'http://localhost:9875/admin'
   }
 };

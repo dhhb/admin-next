@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import cookies from 'cookies-js';
 import config from 'c0nfig';
 import api from '../utils/api';
+import analytics from '../utils/analytics';
 
 Vue.use(Vuex);
 
@@ -26,7 +27,8 @@ const store = new Vuex.Store({
     authenticated: userId,
     user: {},
     articles: [],
-    selectedArticle: null
+    selectedArticle: null,
+    connectedUsers: []
   },
 
   getters: {},
@@ -126,6 +128,10 @@ const store = new Vuex.Store({
 
     resetSelectedArticle({ commit }) {
       commit('setSelectedArticle', {});
+    },
+
+    connectUser({ state }) {
+      analytics.sendAdminUser({id: state.authenticated});
     }
   },
 
@@ -156,6 +162,10 @@ const store = new Vuex.Store({
       if (index > -1) {
         state.articles.splice(index, 1);
       }
+    },
+
+    addConnectedUser(state, id) {
+      state.connectedUsers = [ ...state.connectedUsers, id ];
     }
   }
 });
@@ -170,6 +180,11 @@ api.events.on('request:start', () => {
 
 api.events.on('request:end', () => {
   store.commit('setLoading', false);
+});
+
+analytics.events.on('connected-admin-user', user => {
+  console.log('user', user);
+  store.commit('addConnectedUser', user.id);
 });
 
 export default store;

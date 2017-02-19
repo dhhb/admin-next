@@ -49,6 +49,7 @@
     "webpack": "^1.14.0"
   },
   "dependencies": {
+    "analytics-js-sdk": "github:dhhb/analytics-js-sdk",
     "babel-polyfill": "^6.22.0",
     "c0nfig": "^0.2.2",
     "cookies-js": "^1.2.3",

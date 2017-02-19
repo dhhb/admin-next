@@ -16,12 +16,17 @@ export default {
 
   methods: {
     ...mapActions([
-      'requestUser'
+      'requestUser',
+      'connectUser'
     ])
   },
 
   created() {
     this.requestUser();
+  },
+
+  mounted() {
+    this.connectUser();
   },
 
   template: `

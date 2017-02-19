@@ -5,5 +5,8 @@ module.exports = {
   },
   auth: {
     cookieName: process.env.AUTH_COOKIE_NAME
+  },
+  analytics: {
+    url: process.env.ANALYTICS_URL
   }
 };
