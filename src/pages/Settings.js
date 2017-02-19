@@ -70,16 +70,15 @@ export default {
 
   template: `
     <div class="settings">
-      <el-row class="settings-sub-nav" :gutter="10">
-        <el-col :span="16">
+      <el-row :gutter="10">
+        <el-col>
           <h2>{{$t('settings.title')}}</h2>
         </el-col>
-        <el-col :span="8">
-          <div class="settings-actions">
-            <el-button class="save-btn" type="primary" @click="handleUpdateUser">
-              {{$t('settings.updateBtn')}}
-            </el-button>
-          </div>
+      </el-row>
+      <hr />
+      <el-row class="settings-sub-nav" :gutter="10">
+        <el-col>
+          <h3>{{$t('settings.profileTitle')}}</h3>
         </el-col>
       </el-row>
       <div class="settings-form">
@@ -93,11 +92,19 @@ export default {
               @load="handlePictureLoad" />
           </el-form-item>
           <el-form-item :label="$t('settings.editForm.email')">
-            <el-input
-              type="email"
-              v-model="form.email"
-              auto-complete="off">
-            </el-input>
+            <el-tooltip
+              content="Изменить электронный адрес невозможно"
+              :visible-arrow="false"
+              :openDelay="1000"
+              placement="bottom-start"
+              effect="dark">
+              <el-input
+                type="email"
+                v-model="form.email"
+                auto-complete="off"
+                disabled>
+              </el-input>
+            </el-tooltip>
           </el-form-item>
           <el-form-item :label="$t('settings.editForm.name')">
             <el-input
@@ -106,8 +113,19 @@ export default {
               auto-complete="off">
             </el-input>
           </el-form-item>
+          <el-form-item>
+            <el-button class="save-btn" type="primary" @click="handleUpdateUser">
+              {{$t('settings.updateBtn')}}
+            </el-button>
+          </el-form-item>
         </el-form>
       </div>
+      <hr />
+      <el-row class="settings-sub-nav" :gutter="10">
+        <el-col>
+          <h3>{{$t('settings.statsTitle')}}</h3>
+        </el-col>
+      </el-row>
     </div>
   `
 };

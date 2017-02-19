@@ -179,3 +179,56 @@ svg {
   font-size: 14px;
   padding: 0 16px !important;
 }
+.el-textarea__inner {
+  resize: none !important;
+}
+
+// mix of element.io and simplemde
+.el-form-item.disable-lh {
+  .el-form-item__content {
+    line-height: normal;
+  }
+  .CodeMirror,
+  .editor-preview-side {
+    border: 1px solid #bfcbd9;
+    transition: all .3s ease;
+  }
+  .editor-toolbar {
+    border-color: #bfcbd9;
+    opacity: 1;
+  }
+  .editor-toolbar i.separator {
+    border-left-color: #bfcbd9;
+  }
+  .editor-toolbar a,
+  .editor-statusbar {
+    color: #909dab !important;
+    outline: none;
+  }
+  .CodeMirror-focused {
+    border-color: #20a0ff;
+  }
+  .CodeMirror-empty {
+    color: #33547f;
+  }
+  .editor-toolbar.fullscreen {
+    border-radius: 0;
+  }
+  .CodeMirror-fullscreen {
+    border-radius: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 0;
+  }
+  .CodeMirror-fullscreen + .editor-preview-side {
+    border-right: 0;
+  }
+  // localization for simplemde status doesn't work
+  // TBD: handle it with different classes based on locales
+  .editor-statusbar .lines:before {
+    content: 'Кол-во строк: ';
+  }
+  .editor-statusbar .words:before {
+    content: 'Кол-во слов: '
+  }
+}

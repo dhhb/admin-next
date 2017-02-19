@@ -2,8 +2,11 @@ import './articles-item.scss';
 
 import Vue from 'vue';
 import VueBase64FileUpload from 'vue-base64-file-upload';
-import Mousetrap from '../utils/mousetrap';
 import { mapState, mapActions } from 'vuex';
+import VueSimpleMDE from 'vue-simplemde/src';
+import Mousetrap from '../utils/mousetrap';
+
+Vue.use(VueSimpleMDE);
 
 export default {
   components: {
@@ -20,7 +23,14 @@ export default {
       },
       coverUrl: null,
       keywordInputValue: '',
-      keywordInputVisible: false
+      keywordInputVisible: false,
+      markdownEditorConfigs: {
+        placeholder: this.$t('articles.editForm.contentPlaceholder'),
+        spellChecker: false,
+        forceSync: true,
+        toolbarTips: false // TBD: enable when localized
+      },
+      markdownEditorContent: ''
     };
   },
 
@@ -66,10 +76,17 @@ export default {
         Vue.set(this.form, 'content', val.content);
         Vue.set(this.form, 'keywords', val.keywords);
         Vue.set(this, 'coverUrl', val.coverUrl);
+        Vue.set(this, 'markdownEditorContent', val.content || '');
 
         if (val.coverUrl) {
           Vue.delete(this.form, 'coverData');
         }
+      }
+    },
+
+    markdownEditorContent(val, oldVal) {
+      if (val !== oldVal) {
+        Vue.set(this.form, 'content', val);
       }
     }
   },
@@ -333,16 +350,11 @@ export default {
               :placeholder="$t('articles.editForm.introPlaceholder')">
             </el-input>
           </el-form-item>
-          <el-form-item :label="$t('articles.editForm.content')">
-            <el-input
-              type="textarea"
-              class="mousetrap"
-              :autosize="{minRows: 15, maxRows: 50}"
-              :rows="5"
-              v-model="form.content"
-              auto-complete="off"
-              :placeholder="$t('articles.editForm.contentPlaceholder')">
-            </el-input>
+          <el-form-item class="disable-lh" :label="$t('articles.editForm.content')">
+            <markdown-editor
+              v-model="markdownEditorContent"
+              :configs="markdownEditorConfigs">
+            </markdown-editor>
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.keywords')">
             <el-tag

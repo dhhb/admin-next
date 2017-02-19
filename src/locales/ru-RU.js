@@ -40,9 +40,9 @@ export default {
       title: 'Заголовок',
       titlePlaceholder: 'к примеру: В России вырастили уникальный сталактит из фекалий',
       intro: 'Вступление',
-      introPlaceholder: 'О чем эта статья? Небольшое превью перед основным текстом. Поле поддерживает Markdown.',
+      introPlaceholder: 'О чем эта статья?',
       content: 'Текст',
-      contentPlaceholder: 'Раскройте тему статьи без каких либо ограничений! Поле также поддерживает Markdown.',
+      contentPlaceholder: 'Полный текст статьи',
       cover: 'Обложка',
       coverPlaceholder: 'Нажмите, чтобы выбрать изображение для обложки',
       keywords: 'Ключевые слова'
@@ -76,6 +76,8 @@ export default {
   },
   settings: {
     title: 'Настройки',
+    profileTitle: 'Профиль',
+    statsTitle: 'Статистика',
     editForm: {
       email: 'Электронный адрес',
       name: 'Имя профиля',

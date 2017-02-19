@@ -55,7 +55,7 @@ module.exports = {
   plugins: plugins,
 
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
+    extensions: ['', '.js', '.jsx', '.json', '.vue'],
     alias: {
       vue: 'vue/dist/vue.js'
     }
@@ -81,7 +81,16 @@ module.exports = {
       query: {
         name: '[name].[ext]?[hash]'
       }
+    },{
+      test: /\.vue$/,
+      loaders: ['vue']
     }]
+  },
+
+  vue: {
+    loaders: {
+      js: 'babel'
+    }
   },
 
   postcss: function () {
