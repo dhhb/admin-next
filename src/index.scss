@@ -182,6 +182,9 @@ svg {
 .el-textarea__inner {
   resize: none !important;
 }
+.el-table .cell {
+  word-break: break-word !important;
+}
 
 // mix of element.io and simplemde
 .el-form-item.disable-lh {
@@ -192,6 +195,7 @@ svg {
   .editor-preview-side {
     border: 1px solid #bfcbd9;
     transition: all .3s ease;
+    line-height: 1.5;
   }
   .editor-toolbar {
     border-color: #bfcbd9;

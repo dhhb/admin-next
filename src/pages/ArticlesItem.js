@@ -28,6 +28,7 @@ export default {
         placeholder: this.$t('articles.editForm.contentPlaceholder'),
         spellChecker: false,
         forceSync: true,
+        hideIcons: ['guide'],
         toolbarTips: false // TBD: enable when localized
       },
       markdownEditorContent: ''
