@@ -24,14 +24,23 @@ export default {
       coverUrl: null,
       keywordInputValue: '',
       keywordInputVisible: false,
-      markdownEditorConfigs: {
+      markdownEditorContentConfigs: {
         placeholder: this.$t('articles.editForm.contentPlaceholder'),
         spellChecker: false,
         forceSync: true,
         hideIcons: ['guide'],
-        toolbarTips: false // TBD: enable when localized
+        showIcons: ['strikethrough'],
+        toolbarTips: false // TBD: enable when localized?
       },
-      markdownEditorContent: ''
+      markdownEditorContentText: '',
+      markdownEditorIntroConfigs: {
+        placeholder: this.$t('articles.editForm.introPlaceholder'),
+        spellChecker: false,
+        forceSync: true,
+        toolbar: ['italic', 'strikethrough', '|', 'link', '|', 'preview', 'side-by-side', 'fullscreen'],
+        toolbarTips: false
+      },
+      markdownEditorIntroText: ''
     };
   },
 
@@ -77,7 +86,9 @@ export default {
         Vue.set(this.form, 'content', val.content);
         Vue.set(this.form, 'keywords', val.keywords);
         Vue.set(this, 'coverUrl', val.coverUrl);
-        Vue.set(this, 'markdownEditorContent', val.content || '');
+
+        Vue.set(this, 'markdownEditorIntroText', val.intro || '');
+        Vue.set(this, 'markdownEditorContentText', val.content || '');
 
         if (val.coverUrl) {
           Vue.delete(this.form, 'coverData');
@@ -85,7 +96,13 @@ export default {
       }
     },
 
-    markdownEditorContent(val, oldVal) {
+    markdownEditorIntroText(val, oldVal) {
+      if (val !== oldVal) {
+        Vue.set(this.form, 'intro', val);
+      }
+    },
+
+    markdownEditorContentText(val, oldVal) {
       if (val !== oldVal) {
         Vue.set(this.form, 'content', val);
       }
@@ -342,19 +359,16 @@ export default {
               :placeholder="$t('articles.editForm.coverPlaceholder')"
               @load="handleCoverLoad" />
           </el-form-item>
-          <el-form-item :label="$t('articles.editForm.intro')">
-            <el-input
-              type="textarea"
-              :autosize="{minRows: 5, maxRows: 10}"
-              v-model="form.intro"
-              auto-complete="off"
-              :placeholder="$t('articles.editForm.introPlaceholder')">
-            </el-input>
-          </el-form-item>
-          <el-form-item class="disable-lh" :label="$t('articles.editForm.content')">
+          <el-form-item class="disable-lh intro-edit" :label="$t('articles.editForm.intro')">
             <markdown-editor
-              v-model="markdownEditorContent"
-              :configs="markdownEditorConfigs">
+              v-model="markdownEditorIntroText"
+              :configs="markdownEditorIntroConfigs">
+            </markdown-editor>
+          </el-form-item>
+          <el-form-item class="disable-lh content-edit" :label="$t('articles.editForm.content')">
+            <markdown-editor
+              v-model="markdownEditorContentText"
+              :configs="markdownEditorContentConfigs">
             </markdown-editor>
           </el-form-item>
           <el-form-item :label="$t('articles.editForm.keywords')">

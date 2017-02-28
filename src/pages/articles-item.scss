@@ -20,6 +20,11 @@ $keywordHeight: 28px;
       height: $keywordHeight;
     }
   }
+
+  .intro-edit .CodeMirror,
+  .intro-edit .CodeMirror-scroll {
+    min-height: 150px;
+  }
 }
 
 .articles-item-info {
