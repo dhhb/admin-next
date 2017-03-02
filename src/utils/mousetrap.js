@@ -45,4 +45,3 @@ Mousetrap.prototype.bindGlobal = function (keys, callback, action) {
 Mousetrap.init();
 
 export default Mousetrap;
-

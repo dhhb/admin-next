@@ -1,5 +1,5 @@
-import robAnalyticsSDK from 'analytics-js-sdk';
 import config from 'c0nfig';
+import robAnalyticsSDK from 'analytics-js-sdk';
 
 // connect to analytics server
 robAnalyticsSDK
