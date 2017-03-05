@@ -28,6 +28,7 @@ const store = new Vuex.Store({
     user: {},
     articles: [],
     selectedArticle: null,
+    categories: [],
     connectedUsers: []
   },
 
@@ -57,7 +58,7 @@ const store = new Vuex.Store({
       let filter = type === 'drafts' ? {draft: true} :
         type === 'published' ? {draft: false} : {};
 
-      api.getArticles({author: true, filter}).then(articles => {
+      api.getArticles({include: 'author', filter}).then(articles => {
         commit('setArticles', articles || []);
       });
     },
@@ -130,6 +131,28 @@ const store = new Vuex.Store({
       commit('setSelectedArticle', {});
     },
 
+    requestCategories({ commit }) {
+      api.getCategories().then(categories => {
+        commit('setCategories', categories || []);
+      });
+    },
+
+    createCategory({ commit }, title) {
+      return new Promise((resolve, reject) => {
+        api.createCategory({ title }).then(category => {
+          commit('addCategory', category);
+          resolve(category);
+        }).catch(err => {
+          reject(err);
+        });
+      });
+    },
+
+    deleteCategory({ commit }, id) {
+      commit('deleteCategory', id);
+      api.deleteCategory(id);
+    },
+
     connectUser({ state }) {
       analytics.sendAdminUser({id: state.authenticated});
     }
@@ -161,6 +184,22 @@ const store = new Vuex.Store({
 
       if (index > -1) {
         state.articles.splice(index, 1);
+      }
+    },
+
+    setCategories(state, categories) {
+      state.categories = [ ...categories ];
+    },
+
+    addCategory(state, category) {
+      state.categories = [ ...state.categories, category ];
+    },
+
+    deleteCategory(state, id) {
+      const index = state.categories.findIndex(category => category.id === id);
+
+      if (index > -1) {
+        state.categories.splice(index, 1);
       }
     },
 

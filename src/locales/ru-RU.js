@@ -78,6 +78,7 @@ export default {
     title: 'Настройки',
     profileTitle: 'Профиль',
     statsTitle: 'Статистика',
+    categoriesTitle: 'Категории',
     editForm: {
       email: 'Электронный адрес',
       name: 'Имя профиля',
@@ -86,6 +87,7 @@ export default {
     },
     updateBtn: 'Обновить профиль',
     updateSuccess: 'Профиль успешно обновлен',
-    updateFail: 'Не удалось обновить профиль'
+    updateFail: 'Не удалось обновить профиль',
+    categoryBtn: 'Добавить'
   }
 };

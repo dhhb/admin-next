@@ -120,7 +120,7 @@ export default {
       'resetSelectedArticle'
     ]),
 
-    handleCloseKeyword(keyword) {
+    handleDeleteKeyword(keyword) {
       const index = this.form.keywords.indexOf(keyword);
 
       if (index > -1) {
@@ -378,7 +378,7 @@ export default {
               type="primary"
               :closable="true"
               :close-transition="true"
-              @close="handleCloseKeyword(keyword)">
+              @close="handleDeleteKeyword(keyword)">
               {{keyword}}
             </el-tag>
             <el-input

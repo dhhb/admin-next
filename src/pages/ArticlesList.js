@@ -154,6 +154,7 @@ export default {
               class="articles-actions-tooltip"
               effect="dark"
               placement="bottom"
+              :open-delay="1000"
               :content="$t('articles.editBtn')">
               <el-button
                 type="primary"
@@ -166,6 +167,7 @@ export default {
               class="articles-actions-tooltip"
               effect="dark"
               placement="bottom"
+              :open-delay="1000"
               :content="$t('articles.deleteBtn')">
               <el-button
                 type="danger"

@@ -1,3 +1,5 @@
+$categoryHeight: 28px;
+
 .settings {
   h2 {
     margin-bottom: 0;
@@ -11,7 +13,8 @@
   }
 
   .settings-picture-image {
-    width: 140px;
+    width: 120px;
+    min-height: 120px;
     border-radius: 50%;
     border: 1px solid #bfcbd9;
     padding: 5px;
@@ -26,6 +29,26 @@
     .el-tooltip,
     .el-tooltip__rel {
       width: 100%;
+    }
+  }
+
+  .el-tag.category-item {
+    height: $categoryHeight;
+    vertical-align: middle;
+    line-height: 26px;
+    margin-right: 8px;
+  }
+  .el-button.button-new-category {
+    color: #48576a;
+    font-weight: 500 !important;
+    height: $categoryHeight;
+  }
+  .el-input.input-new-category {
+    display: inline-block;
+    width: 96px;
+    height: $categoryHeight;
+    input {
+      height: $categoryHeight;
     }
   }
 }

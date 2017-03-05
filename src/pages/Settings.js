@@ -10,46 +10,56 @@ export default {
   },
 
   data() {
-    console.log(this.user)
     return {
-      form: {
+      userForm: {
         email: '',
         name: ''
       },
-      pictureUrl: null
+      pictureUrl: null,
+      categoriesFormList: [],
+      categoryInputValue: '',
+      categoryInputVisible: false
     };
   },
 
   computed: {
     ...mapState([
-      'user'
+      'user',
+      'categories'
     ])
   },
 
   watch: {
     user(val) {
-      Vue.set(this.form, 'email', val.email);
-      Vue.set(this.form, 'name', val.name);
+      Vue.set(this.userForm, 'email', val.email);
+      Vue.set(this.userForm, 'name', val.name);
       Vue.set(this, 'pictureUrl', val.pictureUrl);
 
       if (val.pictureUrl) {
-        Vue.delete(this.form, 'pictureData');
+        Vue.delete(this.userForm, 'pictureData');
       }
+    },
+
+    categories(val) {
+      Vue.set(this, 'categoriesFormList', val);
     }
   },
 
   methods: {
     ...mapActions([
       'updateUser',
-      'requestUser'
+      'requestUser',
+      'requestCategories',
+      'createCategory',
+      'deleteCategory'
     ]),
 
     handlePictureLoad(dataUri) {
-      this.form.pictureData = dataUri;
+      this.userForm.pictureData = dataUri;
     },
 
     handleUpdateUser() {
-      this.updateUser(this.form)
+      this.updateUser(this.userForm)
         .then(() => {
           this.$message({
             type: 'success',
@@ -61,11 +71,35 @@ export default {
             message: this.$t('settings.updateFail')
           });
         });
+    },
+
+    handleDeleteCategory(category) {
+      this.deleteCategory(category.id);
+    },
+
+    showCategoryInput() {
+      this.categoryInputVisible = true;
+
+      setTimeout(() => {
+        this.$refs.categoryInput.$el.children[0].focus();
+      }, 500);
+    },
+
+    handleCategoryInputConfirm() {
+      const value = this.categoryInputValue;
+
+      if (value) {
+        this.createCategory(value);
+      }
+
+      this.categoryInputVisible = false;
+      this.categoryInputValue = '';
     }
   },
 
   created() {
     this.requestUser();
+    this.requestCategories();
   },
 
   template: `
@@ -82,7 +116,7 @@ export default {
         </el-col>
       </el-row>
       <div class="settings-form">
-        <el-form :model="form" ref="form" label-width="165px" label-position="left">
+        <el-form :model="userForm" ref="userForm" label-width="165px" label-position="left">
           <el-form-item :label="$t('settings.editForm.picture')">
             <vue-base64-file-upload
               input-class="el-input__inner"
@@ -100,7 +134,7 @@ export default {
               effect="dark">
               <el-input
                 type="email"
-                v-model="form.email"
+                v-model="userForm.email"
                 auto-complete="off"
                 disabled>
               </el-input>
@@ -109,7 +143,7 @@ export default {
           <el-form-item :label="$t('settings.editForm.name')">
             <el-input
               type="text"
-              v-model="form.name"
+              v-model="userForm.name"
               auto-complete="off">
             </el-input>
           </el-form-item>
@@ -120,6 +154,40 @@ export default {
           </el-form-item>
         </el-form>
       </div>
+      <hr />
+      <el-row class="settings-sub-nav" :gutter="10">
+        <el-col>
+          <h3>{{$t('settings.categoriesTitle')}}</h3>
+          <div class="settings-categories">
+            <el-tag
+              class="category-item"
+              v-for="category in categories"
+              type="success"
+              :closable="true"
+              :close-transition="true"
+              @close="handleDeleteCategory(category)">
+              {{category.title}}
+            </el-tag>
+            <el-input
+              class="input-new-category"
+              v-show="categoryInputVisible"
+              v-model="categoryInputValue"
+              ref="categoryInput"
+              size="small"
+              @keyup.enter.native="handleCategoryInputConfirm"
+              @blur="handleCategoryInputConfirm">
+            </el-input>
+            <el-button
+              v-show="!categoryInputVisible"
+              class="button-new-category"
+              icon="plus"
+              size="small"
+              @click="showCategoryInput">
+              {{$t('settings.categoryBtn')}}
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
       <hr />
       <el-row class="settings-sub-nav" :gutter="10">
         <el-col>
