@@ -16,6 +16,7 @@ export default {
       author: 'Автор',
       updatedAt: 'Обновлено',
       status: 'Статус',
+      category: 'Раздел',
       actions: 'Действия'
     },
     status: {

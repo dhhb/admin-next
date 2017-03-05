@@ -58,7 +58,7 @@ const store = new Vuex.Store({
       let filter = type === 'drafts' ? {draft: true} :
         type === 'published' ? {draft: false} : {};
 
-      api.getArticles({include: 'author', filter}).then(articles => {
+      api.getArticles({include: 'author,category', filter}).then(articles => {
         commit('setArticles', articles || []);
       });
     },

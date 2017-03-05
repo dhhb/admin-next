@@ -16,7 +16,8 @@ export default {
 
   computed: {
     ...mapState([
-      'articles'
+      'articles',
+      'categories'
     ]),
 
     pageTitle() {
@@ -31,13 +32,21 @@ export default {
       }
 
       return this.$t('menu.allArticlesItem');
+    },
+
+    categoryFilters() {
+      return this.categories.map(c => ({
+        text: c.title,
+        value: c.id
+      }));
     }
   },
 
   methods: {
     ...mapActions([
       'requestArticles',
-      'deleteArticle'
+      'deleteArticle',
+      'requestCategories'
     ]),
 
     sortTitleColumn(a, b) {
@@ -80,6 +89,10 @@ export default {
             message: this.$t('articles.deleteConfirm.success')
           });
         });
+    },
+
+    filterByCategory(value, row) {
+      return row.category && (row.category.id === value);
     }
   },
 
@@ -91,6 +104,7 @@ export default {
 
   created() {
     this.requestArticles(this.$route.params.type);
+    this.requestCategories();
   },
 
   template: `
@@ -112,6 +126,7 @@ export default {
         style="width: 100%">
         <el-table-column
           prop="title"
+          width="220"
           :label="$t('articles.tableHead.title')"
           :sort-method="sortTitleColumn"
           sortable>
@@ -146,6 +161,19 @@ export default {
         </el-table-column>
 
         <el-table-column
+          prop="category"
+          :label="$t('articles.tableHead.category')"
+          :filters="categoryFilters"
+          :filter-method="filterByCategory">
+          <template scope="scope">
+            <el-tag
+              v-if="scope.row.category"
+              type="success"
+              close-transition>{{scope.row.category.title}}</el-tag>
+          </template>
+        </el-table-column>
+
+        <el-table-column
           :context="_self"
           :label="$t('articles.tableHead.actions')"
           width="120">
@@ -154,6 +182,7 @@ export default {
               class="articles-actions-tooltip"
               effect="dark"
               placement="bottom"
+              :visible-arrow="false"
               :open-delay="1000"
               :content="$t('articles.editBtn')">
               <el-button
@@ -167,6 +196,7 @@ export default {
               class="articles-actions-tooltip"
               effect="dark"
               placement="bottom"
+              :visible-arrow="false"
               :open-delay="1000"
               :content="$t('articles.deleteBtn')">
               <el-button
