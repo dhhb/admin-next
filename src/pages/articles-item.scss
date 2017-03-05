@@ -20,6 +20,9 @@ $keywordHeight: 28px;
       height: $keywordHeight;
     }
   }
+  .el-select {
+    width: 280px;
+  }
 
   .intro-edit .CodeMirror,
   .intro-edit .CodeMirror-scroll {

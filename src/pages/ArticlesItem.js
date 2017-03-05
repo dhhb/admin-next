@@ -19,6 +19,7 @@ export default {
         title: '',
         intro: '',
         content: '',
+        category: '',
         keywords: []
       },
       coverUrl: null,
@@ -46,7 +47,8 @@ export default {
 
   computed: {
     ...mapState([
-      'selectedArticle'
+      'selectedArticle',
+      'categories'
     ]),
 
     routeArticleId() {
@@ -90,6 +92,10 @@ export default {
         Vue.set(this, 'markdownEditorIntroText', val.intro || '');
         Vue.set(this, 'markdownEditorContentText', val.content || '');
 
+        if (val.category) {
+          Vue.set(this.form, 'category', val.category.id);
+        }
+
         if (val.coverUrl) {
           Vue.delete(this.form, 'coverData');
         }
@@ -117,7 +123,8 @@ export default {
       'deleteArticle',
       'publishArticle',
       'unpublishArticle',
-      'resetSelectedArticle'
+      'resetSelectedArticle',
+      'requestCategories'
     ]),
 
     handleDeleteKeyword(keyword) {
@@ -289,6 +296,8 @@ export default {
     if (!this.isNew) {
       this.requestArticle(this.routeArticleId);
     }
+
+    this.requestCategories();
   },
 
   mounted() {
@@ -371,11 +380,22 @@ export default {
               :configs="markdownEditorContentConfigs">
             </markdown-editor>
           </el-form-item>
+          <el-form-item :label="$t('articles.editForm.category')">
+            <el-select v-model="form.category" :placeholder="$t('articles.editForm.categoryPlaceholder')">
+              <el-option
+                v-for="category in categories"
+                :key="category.id"
+                :label="category.title"
+                :value="category.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item :label="$t('articles.editForm.keywords')">
             <el-tag
               class="article-keyword"
               v-for="keyword in form.keywords"
               type="primary"
+              :key="keyword"
               :closable="true"
               :close-transition="true"
               @close="handleDeleteKeyword(keyword)">

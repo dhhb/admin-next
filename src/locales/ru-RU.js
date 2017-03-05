@@ -45,6 +45,8 @@ export default {
       contentPlaceholder: 'Полный текст статьи',
       cover: 'Обложка',
       coverPlaceholder: 'Нажмите, чтобы выбрать изображение для обложки',
+      category: 'Раздел',
+      categoryPlaceholder: 'Выберите раздел для статьи',
       keywords: 'Ключевые слова'
     },
     deleteConfirm: {
@@ -78,7 +80,7 @@ export default {
     title: 'Настройки',
     profileTitle: 'Профиль',
     statsTitle: 'Статистика',
-    categoriesTitle: 'Категории',
+    categoriesTitle: 'Разделы сайта',
     editForm: {
       email: 'Электронный адрес',
       name: 'Имя профиля',

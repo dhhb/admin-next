@@ -87,7 +87,7 @@ const store = new Vuex.Store({
     },
 
     requestArticle({ commit }, id) {
-      api.getArticle(id).then(article => {
+      api.getArticle(id, {include: 'category'}).then(article => {
         commit('setSelectedArticle', article);
       });
     },
