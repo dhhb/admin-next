@@ -156,17 +156,37 @@ export default {
 
     saveArticle() {
       if (this.isNew) {
-        this.createArticle(this.form).then(article => {
+        const successMessage = () => {
           this.$message({
             type: 'success',
             message: this.$t('articles.createSuccess')
           });
-          this.$router.replace(`/articles/drafts/${article.id}`);
-        }).catch(() => {
+        };
+        const errorMessage = () => {
           this.$message({
             type: 'error',
             message: this.$t('articles.createFail')
           });
+        };
+
+        this.createArticle(this.form).then(article => {
+          // images can be uploaded only on patch
+          if (this.form.coverData) {
+            this.updateArticle({
+              id: article.id,
+              data: {coverData: this.form.coverData}
+            }).then(() => {
+              successMessage();
+            }).catch(() => {
+              errorMessage();
+            });
+          } else {
+            successMessage();
+          }
+
+          this.$router.replace(`/articles/drafts/${article.id}`);
+        }).catch(() => {
+          errorMessage();
         });
       } else {
         this.updateArticle({
