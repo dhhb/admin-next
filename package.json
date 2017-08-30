@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "clean": "rm -rf public/*",
-    "start": "npm run server",
+    "start": "npm run build & npm run server",
     "start-dev": "npm run build:watch & npm run server",
     "build": "NODE_ENV=production webpack --config webpack.config --progress --colors",
     "build:watch": "webpack --config webpack.config --colors --watch",
