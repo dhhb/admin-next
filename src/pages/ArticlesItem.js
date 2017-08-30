@@ -185,7 +185,8 @@ export default {
           }
 
           this.$router.replace(`/articles/drafts/${article.id}`);
-        }).catch(() => {
+        }).catch(err => {
+          console.log(err);
           errorMessage();
         });
       } else {
@@ -197,7 +198,8 @@ export default {
             type: 'success',
             message: this.$t('articles.saveSuccess')
           });
-        }).catch(() => {
+        }).catch(err => {
+          console.log(err);
           this.$message({
             type: 'error',
             message: this.$t('articles.saveFail')
@@ -353,7 +355,7 @@ export default {
               @command="handleCommand">
               {{publishTitle}}
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="preview">{{$t('articles.previewBtn')}}</el-dropdown-item>
+                <!-- el-dropdown-item command="preview">{{$t('articles.previewBtn')}}</el-dropdown-item -->
                 <el-dropdown-item command="duplicate">{{$t('articles.duplicateBtn')}}</el-dropdown-item>
                 <el-dropdown-item command="delete">{{$t('articles.deleteBtn')}}</el-dropdown-item>
               </el-dropdown-menu>

@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import cookies from 'cookies-js';
 import config from 'c0nfig';
 import api from '../utils/api';
-import analytics from '../utils/analytics';
+// import analytics from '../utils/analytics';
 
 Vue.use(Vuex);
 
@@ -154,7 +154,7 @@ const store = new Vuex.Store({
     },
 
     connectUser({ state }) {
-      analytics.sendAdminUser({id: state.authenticated});
+      // analytics.sendAdminUser({id: state.authenticated});
     }
   },
 
@@ -221,9 +221,9 @@ api.events.on('request:end', () => {
   store.commit('setLoading', false);
 });
 
-analytics.events.on('connected-admin-user', user => {
-  console.log('user', user);
-  store.commit('addConnectedUser', user.id);
-});
+// analytics.events.on('connected-admin-user', user => {
+//   console.log('user', user);
+//   store.commit('addConnectedUser', user.id);
+// });
 
 export default store;
