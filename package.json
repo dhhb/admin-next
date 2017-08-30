@@ -5,12 +5,14 @@
   "main": "src/index.js",
   "scripts": {
     "clean": "rm -rf public/*",
-    "start": "NODE_ENV=production webpack --config webpack.config --progress --colors",
-    "start-dev": "npm run watch & npm run server",
-    "watch": "webpack --config webpack.config --colors --watch",
+    "start": "npm run server",
+    "start-dev": "npm run build:watch & npm run server",
+    "build": "NODE_ENV=production webpack --config webpack.config --progress --colors",
+    "build:watch": "webpack --config webpack.config --colors --watch",
     "server": "node ./devServer",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "lint": "eslint ./src --fix"
+    "lint": "eslint ./src --fix",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
