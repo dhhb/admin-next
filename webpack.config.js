@@ -13,7 +13,10 @@ const isProduction = (config.env === 'production');
 let plugins = [
   new webpack.DefinePlugin({
     'process.env': {
-      'NODE_ENV': JSON.stringify(config.env)
+      'NODE_ENV': JSON.stringify(config.env),
+      'API_URL': JSON.stringify(config.api.url),
+      'API_SHARED_KEY': JSON.stringify(config.api.sharedKey),
+      'AUTH_COOKIE_NAME': JSON.stringify(config.auth.cookieName)
     }
   }),
   new HtmlPlugin({
